@@ -31,6 +31,34 @@ class HomeViewCell: UITableViewCell {
 
         return label
     }()
+    
+    private lazy var vipIcon1: UIImageView = {
+        let imageView = UIImageView()
+        
+        contentView.addSubview(imageView)
+        
+        return imageView
+    }()
+    
+    private lazy var creatAtLabel1: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.textColor = UIColor(red: 0.447, green: 0.447, blue: 0.447, alpha: 1)
+        
+        contentView.addSubview(label)
+        
+        return label
+    }()
+    
+    private lazy var sourceLabel1: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.textColor = UIColor(red: 0.447, green: 0.447, blue: 0.447, alpha: 1)
+        
+        contentView.addSubview(label)
+        
+        return label
+    }()
 
     // MARK: - 控件属性
     var statusVM : StatusViewModel?
@@ -51,9 +79,14 @@ class HomeViewCell: UITableViewCell {
                 userNameLabel1.textColor = vipIcon.image == nil ? UIColor.black : UIColor.orange
 
                 vipIcon.image = viewModel.vipImage
+                vipIcon1.image = viewModel.vipImage
 
                 creatAtLabel.text = viewModel.creatTimeStr
+                creatAtLabel1.text = viewModel.creatTimeStr
+                
                 sourceLabel.text = viewModel.sourceText
+                sourceLabel1.text = viewModel.sourceText
+                
                 let statusText = viewModel.status.text
                 contentLabel.attributedText = FindEmotionManager.shared.findAttrString(statusText: statusText, font: UIFont.systemFont(ofSize: 14))
 
@@ -192,6 +225,18 @@ class HomeViewCell: UITableViewCell {
         }
 
         userNameLabel1.frame = layout.nameRect
+        
+        if vipIcon1.frame != layout.vipIconRect {
+            vipIcon1.frame = layout.vipIconRect
+        }
+        
+        if creatAtLabel1.frame != layout.creatingDateRect {
+            creatAtLabel1.frame = layout.creatingDateRect
+        }
+        
+        if sourceLabel1.frame != layout.sourceRect {
+            sourceLabel1.frame = layout.sourceRect
+        }
     }
 }
 
