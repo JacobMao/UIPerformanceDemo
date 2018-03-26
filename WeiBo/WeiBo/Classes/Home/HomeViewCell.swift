@@ -5,25 +5,59 @@ private let edgeMargin : CGFloat = 15
 private let itemMargin : CGFloat = 10
 
 class HomeViewCell: UITableViewCell {
-    
+    private lazy var iconImage1: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 20
+        imageView.clipsToBounds = true
+
+        contentView.addSubview(imageView)
+
+        return imageView
+    }()
+
+    private lazy var vertifyIcon1: UIImageView = {
+        let imageView = UIImageView()
+
+        contentView.addSubview(imageView)
+
+        return imageView
+    }()
+
+    private lazy var userNameLabel1: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+
+        contentView.addSubview(label)
+
+        return label
+    }()
+
     // MARK: - 控件属性
     var statusVM : StatusViewModel?
     {
         didSet{
             
             if let viewModel = statusVM {
-                
-//                iconImage.sd_setImage(with: URL(string : (viewModel.status.user?.profile_image_url)!))
+
                 iconImage.sd_setImage(with: statusVM?.profileURL)
+                iconImage1.sd_setImage(with: statusVM?.profileURL)
+                
                 vertifyIcon.image = viewModel.verifiedImage
-                vipIcon.image = viewModel.vipImage
+                vertifyIcon1.image = viewModel.verifiedImage
+
                 userNameLabel.text = viewModel.status.user?.screen_name
+                userNameLabel.textColor = vipIcon.image == nil ? UIColor.black : UIColor.orange
+                userNameLabel1.text = viewModel.status.user?.screen_name
+                userNameLabel1.textColor = vipIcon.image == nil ? UIColor.black : UIColor.orange
+
+                vipIcon.image = viewModel.vipImage
+
                 creatAtLabel.text = viewModel.creatTimeStr
                 sourceLabel.text = viewModel.sourceText
-//                contentLabel.text = viewModel.status.text
                 let statusText = viewModel.status.text
                 contentLabel.attributedText = FindEmotionManager.shared.findAttrString(statusText: statusText, font: UIFont.systemFont(ofSize: 14))
-                userNameLabel.textColor = vipIcon.image == nil ? UIColor.black : UIColor.orange // 设置用户名文字颜色
+
+
                 // 计算picView的宽度和高度                
                 picViewHcons.constant = self.calculatePicViewSize(count: (statusVM?.picURLs.count ?? 0)! ).height
                 picVIewWcons.constant = self.calculatePicViewSize(count: (statusVM?.picURLs.count ?? 0)! ).width
@@ -148,11 +182,17 @@ class HomeViewCell: UITableViewCell {
         contentLabelWidthConstraint.constant = kScreenW - 2 * 15
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    func setupLayout(_ layout: HomeCellLayout) {
+        if iconImage1.bounds.isEmpty {
+            iconImage1.frame = layout.iconImageRect
+        }
 
+        if vertifyIcon1.bounds.isEmpty {
+            vertifyIcon1.frame = layout.vertifyIconRect
+        }
+
+        userNameLabel1.frame = layout.nameRect
     }
-
 }
 
 

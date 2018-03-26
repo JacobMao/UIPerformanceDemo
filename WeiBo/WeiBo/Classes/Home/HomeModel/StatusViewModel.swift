@@ -86,4 +86,8 @@ class StatusViewModel: NSObject {
             }
         }
     }
+
+    func generateLayoutModel() -> HomeCellLayout {
+        return HomeCellLayout()
+    }
 }

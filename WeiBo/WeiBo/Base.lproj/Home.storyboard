@@ -25,7 +25,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="254"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default_small" translatesAutoresizingMaskIntoConstraints="NO" id="NKL-Aw-RNu" userLabel="头像">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NKL-Aw-RNu" userLabel="头像">
                                             <rect key="frame" x="15" y="15" width="40" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="GE0-Ma-k5Z"/>
@@ -274,7 +274,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="avatar_default_small" width="34" height="34"/>
         <image name="avatar_vip" width="17" height="17"/>
         <image name="common_icon_membership_level1" width="14" height="14"/>
         <image name="timeline_icon_comment" width="18" height="18"/>

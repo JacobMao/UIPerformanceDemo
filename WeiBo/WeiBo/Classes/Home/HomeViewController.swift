@@ -6,6 +6,7 @@ import SVProgressHUD
 class HomeViewController: BaseViewController {
 
     var statusViewModels : [StatusViewModel] = [StatusViewModel]()
+    var cellLayoutModels : [HomeCellLayout] = [HomeCellLayout]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,49 +69,36 @@ extension HomeViewController{
                 
                 return
             }
-            
-            var tempViewModels = [StatusViewModel]()
-            
-            for dict in statusArray{
-                
-                let status = Status(dict : dict)
-                
-                tempViewModels.append(StatusViewModel(status: status))
+
+            DispatchQueue.global(qos: .userInitiated).async {
+                var tempViewModels = [StatusViewModel]()
+                tempViewModels.reserveCapacity(statusArray.count)
+
+                var tempLayoutModels = [HomeCellLayout]()
+                tempLayoutModels.reserveCapacity(statusArray.count)
+
+                for dict in statusArray {
+                    let status = Status(dict : dict)
+                    let viewModel = StatusViewModel(status: status)
+                    tempViewModels.append(viewModel)
+                    tempLayoutModels.append(viewModel.generateLayoutModel())
+                }
+
+                DispatchQueue.main.async {
+                    if isNewData {
+                        self.statusViewModels = tempViewModels + self.statusViewModels
+                        self.cellLayoutModels = tempLayoutModels + self.cellLayoutModels
+
+                    } else {
+                        self.statusViewModels += tempViewModels
+                        self.cellLayoutModels += tempLayoutModels
+                    }
+
+                    self.tableView.reloadData()
+                    self.tableView.mj_header.endRefreshing()
+                    self.tableView.mj_footer.endRefreshing()
+                }
             }
-            
-            if isNewData {
-                self.statusViewModels = tempViewModels + self.statusViewModels
-                self.cacheImage(isNewData: true , count: tempViewModels.count,viewModels: self.statusViewModels)
-
-            } else {
-                self.statusViewModels += tempViewModels
-                self.cacheImage(isNewData: false , count: tempViewModels.count,viewModels: self.statusViewModels)
-
-            }
-
-        }
-        
-    }
-    
-    fileprivate func cacheImage(isNewData : Bool ,count : Int ,  viewModels : [StatusViewModel]){
-        let group = DispatchGroup.init()
-        for viewModel in viewModels {
-            for url in viewModel.picURLs {
-                
-                group.enter()
-                SDWebImageManager.shared().loadImage(with: url, options: [], progress: nil, completed: { (_, _, _, _, _, _) in
-
-                    Dlog("图片下载完")
-                    group.leave()
-                })
-            }
-        }
-
-        group.notify(queue: DispatchQueue.main) {
-            self.tableView.reloadData()
-            
-            self.tableView.mj_header.endRefreshing()
-            self.tableView.mj_footer.endRefreshing()
         }
     }
 }
@@ -122,18 +110,17 @@ extension HomeViewController{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "homeCell") as! HomeViewCell
-        
+
+        cell.setupLayout(cellLayoutModels[indexPath.row])
         cell.statusVM = self.statusViewModels[indexPath.row]
-        
+
         return cell
         
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let viewModel = self.statusViewModels[indexPath.row]
-    
         return viewModel.cellHeight
     }
     

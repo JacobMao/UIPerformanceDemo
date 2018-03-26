@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		533519B12068EF0C00A8F124 /* HomeCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533519B02068EF0C00A8F124 /* HomeCellLayout.swift */; };
 		5BB4D16FB57EB5EE75ECE37E /* Pods_WeiBo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88448C91CFE995C2705B9064 /* Pods_WeiBo.framework */; };
 		B4030E1B1ED6726A00E48DE9 /* UserAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4030E1A1ED6726A00E48DE9 /* UserAccountViewModel.swift */; };
 		B41D0C701EE5093700F2282A /* PicCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D0C6F1EE5093700F2282A /* PicCollectionView.swift */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		4F845EC9E9752E8E88B767AE /* Pods-WeiBo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeiBo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeiBo/Pods-WeiBo.debug.xcconfig"; sourceTree = "<group>"; };
+		533519B02068EF0C00A8F124 /* HomeCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellLayout.swift; sourceTree = "<group>"; };
 		88448C91CFE995C2705B9064 /* Pods_WeiBo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeiBo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4030E1A1ED6726A00E48DE9 /* UserAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccountViewModel.swift; sourceTree = "<group>"; };
 		B41D0C6F1EE5093700F2282A /* PicCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicCollectionView.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				B4C978801ECE8AEB001D640E /* HomeViewController.swift */,
 				B4F0F7141ED972A9009298EA /* HomeViewCell.swift */,
 				B41D0C6F1EE5093700F2282A /* PicCollectionView.swift */,
+				533519B02068EF0C00A8F124 /* HomeCellLayout.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -298,7 +301,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0920;
-				ORGANIZATIONNAME = xiaoyouPrince;
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					B45664B51ECDF70C00BAD01F = {
 						CreatedOnToolsVersion = 8.3;
@@ -414,6 +417,7 @@
 				B49C0D511ED833B700B220E6 /* Date-Extension.swift in Sources */,
 				B4BC06471ED53DFD0030E68E /* Commen.swift in Sources */,
 				B4BC06431ED528330030E68E /* OAuthViewController.swift in Sources */,
+				533519B12068EF0C00A8F124 /* HomeCellLayout.swift in Sources */,
 				B4BC063F1ED5236A0030E68E /* NetworkTools.swift in Sources */,
 				B4C9787F1ECE8711001D640E /* MainViewController.swift in Sources */,
 				B4834DD21EEE3F2B00DD7D7F /* EmotionPackage.swift in Sources */,
