@@ -1,5 +1,68 @@
 import UIKit
 
+private let matchTextColor = UIColor(red: 87 / 255.0, green: 196 / 255.0, blue: 251 / 255.0, alpha: 1.0)
+
+private extension String {
+    func getRanges(pattern : String) -> [NSRange]? {
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            return nil
+        }
+
+        return getRanges(regex: regex)
+    }
+
+    func getLinkRanges() -> [NSRange]? {
+        guard let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) else {
+            return nil
+        }
+
+        return getRanges(regex: detector)
+    }
+
+    func getRanges(regex : NSRegularExpression) -> [NSRange] {
+        let results = regex.matches(in: self, options: [], range: NSRange(location: 0, length: self.count))
+
+        var ranges = [NSRange]()
+        for res in results {
+            ranges.append(res.range)
+        }
+
+        return ranges
+    }
+}
+
+struct StatusContent {
+    let statusAttributedStr: NSMutableAttributedString?
+    var linkRanges : [NSRange] = [NSRange]()
+    var userRanges : [NSRange] = [NSRange]()
+    var topicRanges : [NSRange] = [NSRange]()
+
+    init(status: NSMutableAttributedString?) {
+        statusAttributedStr = status
+
+        if let linkRanges = statusAttributedStr?.string.getLinkRanges() ?? nil {
+            self.linkRanges = linkRanges
+            for range in linkRanges {
+                statusAttributedStr?.addAttribute(NSAttributedStringKey.foregroundColor, value: matchTextColor, range: range)
+            }
+        }
+
+        if let userRanges = statusAttributedStr?.string.getRanges(pattern: "@[\\u4e00-\\u9fa5a-zA-Z0-9_-]*") ?? nil {
+            self.userRanges = userRanges
+            for range in userRanges {
+                statusAttributedStr?.addAttribute(NSAttributedStringKey.foregroundColor, value: matchTextColor, range: range)
+            }
+        }
+
+        if let topicRanges = statusAttributedStr?.string.getRanges(pattern: "#.*?#") ?? nil {
+            self.topicRanges = topicRanges
+            for range in topicRanges {
+                statusAttributedStr?.addAttribute(NSAttributedStringKey.foregroundColor, value: matchTextColor, range: range)
+            }
+        }
+    }
+}
+
 class StatusViewModel: NSObject {
     
     var status : Status
@@ -12,7 +75,9 @@ class StatusViewModel: NSObject {
     var vipImage : UIImage?        /// 用户会员等级图片
     var profileURL : URL?          /// 用户头像的处理
     var picURLs : [URL] = [URL]()  /// 微博配图的处理
-    
+
+    let statusContent: StatusContent
+    let retweetContent: StatusContent
     
     init( status : Status ){
         
@@ -85,9 +150,24 @@ class StatusViewModel: NSObject {
                 
             }
         }
+
+        statusContent = StatusContent(status: FindEmotionManager.shared.findAttrString(statusText: status.text,
+                                                                                       font: UIFont.systemFont(ofSize: 13)))
+
+        if let retweetText = status.retweeted_status?.text, let screenName = status.retweeted_status?.user?.screen_name {
+            retweetContent = StatusContent(status: FindEmotionManager.shared.findAttrString(statusText: "@" + "\(screenName):" + retweetText,
+                                                                                           font: UIFont.systemFont(ofSize: 13)))
+        } else {
+            retweetContent = StatusContent(status: nil)
+        }
+
+
     }
 
     func generateLayoutModel() -> HomeCellLayout {
         return HomeCellLayout(viewModel: self)
     }
+}
+
+private extension StatusViewModel {
 }

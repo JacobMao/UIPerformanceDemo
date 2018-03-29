@@ -18,7 +18,10 @@ class FindEmotionManager: NSObject {
 
         let results = regex.matches(in: statusText, options: [], range: NSRange(location: 0, length: statusText.count))
 
-        let attrMStr = NSMutableAttributedString(string: statusText)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = .byWordWrapping
+        let attrMStr = NSMutableAttributedString(string: statusText, attributes: [.font : font])
+        attrMStr.setAttributes([.paragraphStyle : paragraphStyle], range: NSRange(location: 0, length: 0))
         
         var i = results.count - 1
         while i >= 0 {

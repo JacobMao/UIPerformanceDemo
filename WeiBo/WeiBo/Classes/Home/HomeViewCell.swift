@@ -60,6 +60,44 @@ class HomeViewCell: UITableViewCell {
         return label
     }()
 
+    private lazy var contentLabel1: RELabel2 = {
+        let label = RELabel2()
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.font = UIFont.systemFont(ofSize: 13)
+
+        contentView.addSubview(label)
+
+        return label
+    }()
+
+    private lazy var retweetContentLabel1: RELabel2 = {
+        let label = RELabel2()
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.font = UIFont.systemFont(ofSize: 13)
+
+        contentView.addSubview(label)
+
+        return label
+    }()
+
+    private lazy var picView1: PicCollectionView2 = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        layout.scrollDirection = .vertical
+
+        let pView = PicCollectionView2(frame: CGRect.zero, collectionViewLayout: layout)
+        pView.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1.0)
+
+        contentView.addSubview(pView)
+
+        return pView
+    }()
+
     // MARK: - 控件属性
     var statusVM : StatusViewModel?
     {
@@ -86,17 +124,26 @@ class HomeViewCell: UITableViewCell {
                 
                 sourceLabel.text = viewModel.sourceText
                 sourceLabel1.text = viewModel.sourceText
-                
-                let statusText = viewModel.status.text
-                contentLabel.attributedText = FindEmotionManager.shared.findAttrString(statusText: statusText, font: UIFont.systemFont(ofSize: 14))
 
+                contentLabel.attributedText = viewModel.statusContent.statusAttributedStr
+                contentLabel1.attributedText = viewModel.statusContent.statusAttributedStr
+                contentLabel1.linkRanges = viewModel.statusContent.linkRanges
+                contentLabel1.userRanges = viewModel.statusContent.userRanges
+                contentLabel1.topicRanges = viewModel.statusContent.topicRanges
+
+                retweetContentLabel1.attributedText = viewModel.retweetContent.statusAttributedStr
+                retweetContentLabel1.linkRanges = viewModel.retweetContent.linkRanges
+                retweetContentLabel1.userRanges = viewModel.retweetContent.userRanges
+                retweetContentLabel1.topicRanges = viewModel.retweetContent.topicRanges
+
+                picView1.picUrls = (statusVM?.picURLs)!
 
                 // 计算picView的宽度和高度                
                 picViewHcons.constant = self.calculatePicViewSize(count: (statusVM?.picURLs.count ?? 0)! ).height
                 picVIewWcons.constant = self.calculatePicViewSize(count: (statusVM?.picURLs.count ?? 0)! ).width
                 picView.picUrls = (statusVM?.picURLs)!
                 // 设置转发微博的内容
-                if let retweetText = statusVM?.status.retweeted_status?.text , let screenName = statusVM?.status.retweeted_status?.user?.screen_name{
+                if let retweetText = statusVM?.status.retweeted_status?.text , let screenName = statusVM?.status.retweeted_status?.user?.screen_name {
 
                     retweetContentLabel.text = "@" + "\(screenName):" + retweetText
                     
@@ -237,6 +284,13 @@ class HomeViewCell: UITableViewCell {
         if sourceLabel1.frame != layout.sourceRect {
             sourceLabel1.frame = layout.sourceRect
         }
+
+        contentLabel1.frame = layout.contentRect
+        retweetContentLabel1.frame = layout.retweetContentRect
+
+        picView1.frame = layout.picContainerRect
+        let picLayout = picView1.collectionViewLayout as! UICollectionViewFlowLayout
+        picLayout.itemSize = layout.picViewSize
     }
 }
 
@@ -267,7 +321,8 @@ extension HomeViewCell{
             if let image = SDWebImageManager.shared().imageCache?.imageFromCache(forKey: imageurl)
              {
                 // 3.2 设置单张配图的layout.itemSize
-                layout.itemSize = CGSize(width: ((image.size.width) * 2) > 150 ? 150 : ((image.size.width) * 2 ), height: (image.size.height) * 2 > 100 ? 100 : (image.size.height) * 2)
+                layout.itemSize = CGSize(width: ((image.size.width) * 2) > 150 ? 150 : ((image.size.width) * 2 ),
+                                         height: (image.size.height) * 2 > 100 ? 100 : (image.size.height) * 2)
                 // 3.3.返回对应的size
                 return layout.itemSize
             }
