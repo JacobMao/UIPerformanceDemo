@@ -14,6 +14,7 @@ struct HomeCellLayout {
     let retweetContentRect: CGRect
     let picContainerRect: CGRect
     let picViewSize: CGSize
+    let retweetBGRect: CGRect
     
     init(viewModel: StatusViewModel) {
         if let screenName = viewModel.status.user?.screen_name {
@@ -114,6 +115,23 @@ struct HomeCellLayout {
         }
 
         picViewSize = imageViewSize
+        
+        let tempRetweetContentRect = retweetContentRect
+        if tempRetweetContentRect == CGRect.zero {
+            retweetBGRect = CGRect.zero
+        } else {
+            if picContainerRect != CGRect.zero {
+                retweetBGRect = CGRect(x: 0,
+                                       y: tempRetweetContentRect.minY - 8,
+                                       width: kScreenW,
+                                       height: (picContainerRect.maxY + 10) - (tempRetweetContentRect.minY - 8))
+            } else {
+                retweetBGRect = CGRect(x: 0,
+                                       y: tempRetweetContentRect.minY - 8,
+                                       width: kScreenW,
+                                       height: tempRetweetContentRect.height + 18)
+            }
+        }
     }
 
     private static func calculatePicViewAndItemSize(count : Int) -> (CGSize, CGSize) {
@@ -128,8 +146,6 @@ struct HomeCellLayout {
         let imageViewWH : CGFloat = (kScreenW - 2 * edgeMargin - 2 * itemMargin) / 3
         let imageViewSize = CGSize(width: imageViewWH, height: imageViewWH)
 
-
-        // 5.张配图
         if count == 4 {
             let picViewWH = imageViewWH * 2 + itemMargin + 1
             return (CGSize(width: picViewWH, height: picViewWH), imageViewSize)

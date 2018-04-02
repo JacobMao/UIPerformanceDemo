@@ -97,6 +97,19 @@ class HomeViewCell: UITableViewCell {
 
         return pView
     }()
+    
+    private lazy var retweetStatusBGView1: UIView = {
+        let bgView = UIView()
+        bgView.backgroundColor = UIColor(red: 235.0 / 255.0,
+                                         green: 235.0 / 255.0,
+                                         blue: 241.0 / 255.0,
+                                         alpha: 1.0)
+        
+        contentView.addSubview(bgView)
+        
+        return bgView
+    }()
+    
 
     // MARK: - 控件属性
     var statusVM : StatusViewModel?
@@ -286,11 +299,16 @@ class HomeViewCell: UITableViewCell {
         }
 
         contentLabel1.frame = layout.contentRect
+        
+        retweetStatusBGView1.frame = layout.retweetBGRect
+        
         retweetContentLabel1.frame = layout.retweetContentRect
 
         picView1.frame = layout.picContainerRect
         let picLayout = picView1.collectionViewLayout as! UICollectionViewFlowLayout
         picLayout.itemSize = layout.picViewSize
+        
+        
     }
 }
 

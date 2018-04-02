@@ -45,7 +45,7 @@ extension OAuthViewController : UIWebViewDelegate{
         }
 
         let codeRange = url.range(of: "code=")!
-        let code = url.substring(from: codeRange.upperBound)
+        let code = String(url[codeRange.upperBound...])
 
         loadAcceccTokenWithCode(code: code)
 
