@@ -15,6 +15,7 @@ struct HomeCellLayout {
     let picContainerRect: CGRect
     let picViewSize: CGSize
     let retweetBGRect: CGRect
+    let cellHeight: CGFloat
     
     init(viewModel: StatusViewModel) {
         if let screenName = viewModel.status.user?.screen_name {
@@ -61,6 +62,8 @@ struct HomeCellLayout {
             sourceRect = CGRect.zero
         }
 
+        var cellHeightResult: CGFloat = iconImageRect.maxY + 15
+        
         if let drawingRect = viewModel.statusContent.statusAttributedStr?.boundingRect(with: CGSize(width: kScreenW - 30, height: CGFloat(MAXFLOAT)),
                                                                                        options: [.usesLineFragmentOrigin, .usesFontLeading],
                                                                                        context: nil) {
@@ -68,6 +71,8 @@ struct HomeCellLayout {
                                  y: iconImageRect.maxY + 10,
                                  width: ceil(drawingRect.width),
                                  height: ceil(drawingRect.height))
+            
+            cellHeightResult = contentRect.maxY + 15
         } else {
             contentRect = CGRect.zero
         }
@@ -132,6 +137,16 @@ struct HomeCellLayout {
                                        height: tempRetweetContentRect.height + 18)
             }
         }
+        
+        if retweetBGRect != CGRect.zero {
+            cellHeightResult = retweetBGRect.maxY
+        } else {
+            if picContainerRect != CGRect.zero {
+                cellHeightResult = picContainerRect.maxY
+            }
+        }
+        
+        cellHeight = cellHeightResult
     }
 
     private static func calculatePicViewAndItemSize(count : Int) -> (CGSize, CGSize) {

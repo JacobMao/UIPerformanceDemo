@@ -18,6 +18,8 @@ class HomeViewController: BaseViewController {
         title = "Home"
         tableView.estimatedRowHeight = 200
         addRefreshComponent()
+        
+        tableView.register(HomeViewCell.self, forCellReuseIdentifier: "homeCell")
     }
     
     deinit {
@@ -120,10 +122,8 @@ extension HomeViewController{
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let viewModel = self.statusViewModels[indexPath.row]
-        return viewModel.cellHeight
+        return cellLayoutModels[indexPath.row].cellHeight
     }
-    
 }
 
 
