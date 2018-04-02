@@ -16,7 +16,6 @@ class HomeViewController: BaseViewController {
         }
         
         title = "Home"
-        tableView.estimatedRowHeight = 200
         addRefreshComponent()
         
         tableView.register(HomeViewCell.self, forCellReuseIdentifier: "homeCell")
