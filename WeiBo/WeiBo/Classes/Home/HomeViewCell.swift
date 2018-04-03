@@ -141,14 +141,28 @@ class HomeViewCell: UITableViewCell {
         didSet {
             if let viewModel = statusVM {
                 imageOperation?.cancel()
+                CATransaction.begin()
+                CATransaction.setDisableActions(true)
+                self.iconImage1.contents = nil
+                CATransaction.commit()
                 imageOperation = SDWebImageManager.shared().loadImage(with: statusVM?.profileURL,
                                                                       options: [],
                                                                       progress: nil) { (image, _, _, _, _, _) in
+                                                                        CATransaction.begin()
+                                                                        CATransaction.setDisableActions(true)
                                                                         self.iconImage1.contents = image?.cgImage
+                                                                        CATransaction.commit()
                 }
-                
+
+                CATransaction.begin()
+                CATransaction.setDisableActions(true)
                 vertifyIcon1.contents = viewModel.verifiedImage?.cgImage
+                CATransaction.commit()
+
+                CATransaction.begin()
+                CATransaction.setDisableActions(true)
                 vipIcon1.contents = viewModel.vipImage?.cgImage
+                CATransaction.commit()
                 
                 userNameLabel1.string = viewModel.status.user?.screen_name
                 userNameLabel1.foregroundColor  = (viewModel.vipImage == nil ? UIColor.black : UIColor.orange).cgColor

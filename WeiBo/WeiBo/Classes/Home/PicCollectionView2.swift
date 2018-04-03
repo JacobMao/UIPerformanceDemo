@@ -66,10 +66,19 @@ class PicCollectionViewCell2: UICollectionViewCell {
             guard let url = picUrl else {  return  }
 
             imageOperation?.cancel()
+
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            self.iconImageLayer.contents = nil
+            CATransaction.commit()
+
             imageOperation = SDWebImageManager.shared().loadImage(with: url,
                                                                   options: [],
                                                                   progress: nil) { (image, _, _, _, _, _) in
+                                                                    CATransaction.begin()
+                                                                    CATransaction.setDisableActions(true)
                                                                     self.iconImageLayer.contents = image?.cgImage
+                                                                    CATransaction.commit()
             }
          }
     }
