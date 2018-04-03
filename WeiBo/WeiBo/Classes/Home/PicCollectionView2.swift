@@ -29,11 +29,11 @@ extension PicCollectionView2 : UICollectionViewDataSource , UICollectionViewDele
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let cell = self.dequeueReusableCell(withReuseIdentifier: "picCell", for: indexPath) as! PicCollectionViewCell2
 
-        if cell.iconImageView.frame == CGRect.zero {
-            cell.iconImageView.frame = CGRect(x: 0,
-                                              y: 0,
-                                              width: (collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width,
-                                              height: (collectionViewLayout as! UICollectionViewFlowLayout).itemSize.height)
+        if cell.iconImageLayer.frame == CGRect.zero {
+            cell.iconImageLayer.frame = CGRect(x: 0,
+                                               y: 0,
+                                               width: (collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width,
+                                               height: (collectionViewLayout as! UICollectionViewFlowLayout).itemSize.height)
         }
 
         cell.picUrl = picUrls[indexPath.item]
@@ -42,28 +42,35 @@ extension PicCollectionView2 : UICollectionViewDataSource , UICollectionViewDele
 }
 
 class PicCollectionViewCell2: UICollectionViewCell {
-    let iconImageView: UIImageView
+    let iconImageLayer: CALayer
+    private var imageOperation: SDWebImageOperation?
 
     override init(frame: CGRect) {
-        iconImageView = UIImageView()
+        iconImageLayer = CALayer()
 
         super.init(frame: frame)
 
-        contentView.addSubview(iconImageView)
+        contentView.layer.addSublayer(iconImageLayer)
     }
 
     required init?(coder aDecoder: NSCoder) {
-        iconImageView = UIImageView()
+        iconImageLayer = CALayer()
 
         super.init(coder: aDecoder)
 
-        contentView.addSubview(iconImageView)
+        contentView.layer.addSublayer(iconImageLayer)
     }
 
     var picUrl : URL? {
         didSet{
             guard let url = picUrl else {  return  }
-            iconImageView.sd_setImage(with: url, placeholderImage: nil)
+
+            imageOperation?.cancel()
+            imageOperation = SDWebImageManager.shared().loadImage(with: url,
+                                                                  options: [],
+                                                                  progress: nil) { (image, _, _, _, _, _) in
+                                                                    self.iconImageLayer.contents = image?.cgImage
+            }
          }
     }
 }

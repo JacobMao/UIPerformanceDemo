@@ -69,36 +69,39 @@ class HomeViewCell: UITableViewCell {
         return label
     }()
 
-    private lazy var contentLabel1: CATextLayer = {
-        let label = CATextLayer()
-        
-        label.contentsScale = UIScreen.main.scale
-        label.alignmentMode = kCAAlignmentLeft
-        label.isWrapped = true
+    private lazy var contentLabel1: UILabel = {
+//        let label = CATextLayer()
+//
+//        label.contentsScale = UIScreen.main.scale
+//        label.alignmentMode = kCAAlignmentLeft
+//        label.isWrapped = true
 //        label.backgroundColor = UIColor.red.cgColor
-        
-//        label.numberOfLines = 0
-//        label.lineBreakMode = .byWordWrapping
-//        label.font = UIFont.systemFont(ofSize: 13)
+//        contentView.layer.addSublayer(label)
 
-        contentView.layer.addSublayer(label)
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.font = UIFont.systemFont(ofSize: 13)
+        contentView.addSubview(label)
 
         return label
     }()
 
-    private lazy var retweetContentLabel1: CATextLayer = {
-        let label = CATextLayer()
-        
-        label.contentsScale = UIScreen.main.scale
-        label.alignmentMode = kCAAlignmentLeft
-        label.isWrapped = true
-        
-//        label.textAlignment = .left
-//        label.numberOfLines = 0
-//        label.lineBreakMode = .byWordWrapping
-//        label.font = UIFont.systemFont(ofSize: 13)
+    private lazy var retweetContentLabel1: UILabel = {
+//        let label = CATextLayer()
+//
+//        label.contentsScale = UIScreen.main.scale
+//        label.alignmentMode = kCAAlignmentLeft
+//        label.isWrapped = true
+//        contentView.layer.addSublayer(label)
 
-        contentView.layer.addSublayer(label)
+        let label = UILabel()
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.font = UIFont.systemFont(ofSize: 13)
+        contentView.addSubview(label)
+
 
         return label
     }()
@@ -129,17 +132,19 @@ class HomeViewCell: UITableViewCell {
         
         return bgView
     }()
-    
+
+    private var imageOperation: SDWebImageOperation?
 
     // MARK: - 控件属性
     var statusVM : StatusViewModel?
     {
         didSet {
             if let viewModel = statusVM {
-                SDWebImageManager.shared().loadImage(with: statusVM?.profileURL,
-                                                     options: [],
-                                                     progress: nil) { (image, _, _, _, _, _) in
-                                                        self.iconImage1.contents = image?.cgImage
+                imageOperation?.cancel()
+                imageOperation = SDWebImageManager.shared().loadImage(with: statusVM?.profileURL,
+                                                                      options: [],
+                                                                      progress: nil) { (image, _, _, _, _, _) in
+                                                                        self.iconImage1.contents = image?.cgImage
                 }
                 
                 vertifyIcon1.contents = viewModel.verifiedImage?.cgImage
@@ -152,12 +157,12 @@ class HomeViewCell: UITableViewCell {
                 
                 sourceLabel1.string = viewModel.sourceText
 
-                contentLabel1.string = viewModel.statusContent.statusAttributedStr
+                contentLabel1.attributedText = viewModel.statusContent.statusAttributedStr
 //                contentLabel1.linkRanges = viewModel.statusContent.linkRanges
 //                contentLabel1.userRanges = viewModel.statusContent.userRanges
 //                contentLabel1.topicRanges = viewModel.statusContent.topicRanges
 
-                retweetContentLabel1.string = viewModel.retweetContent.statusAttributedStr
+                retweetContentLabel1.attributedText = viewModel.retweetContent.statusAttributedStr
 //                retweetContentLabel1.linkRanges = viewModel.retweetContent.linkRanges
 //                retweetContentLabel1.userRanges = viewModel.retweetContent.userRanges
 //                retweetContentLabel1.topicRanges = viewModel.retweetContent.topicRanges
@@ -254,20 +259,14 @@ class HomeViewCell: UITableViewCell {
             CATransaction.commit()
         }
 
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
         contentLabel1.frame = layout.contentRect
-        CATransaction.commit()
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         retweetStatusBGView1.frame = layout.retweetBGRect
         CATransaction.commit()
-        
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
+
         retweetContentLabel1.frame = layout.retweetContentRect
-        CATransaction.commit()
         
         picView1.frame = layout.picContainerRect
         let picLayout = picView1.collectionViewLayout as! UICollectionViewFlowLayout
