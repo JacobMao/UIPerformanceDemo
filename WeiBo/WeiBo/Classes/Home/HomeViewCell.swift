@@ -287,6 +287,8 @@ class HomeViewCell: UITableViewCell {
         
         picView1.frame = layout.picContainerRect
         let picLayout = picView1.collectionViewLayout as! UICollectionViewFlowLayout
-        picLayout.itemSize = layout.picViewSize
+        if layout.picViewSize != CGSize.zero {
+            picLayout.itemSize = layout.picViewSize
+        }
     }
 }
