@@ -79,7 +79,7 @@ class HomeViewCell: UITableViewCell {
 //        contentView.layer.addSublayer(label)
 
         let label = AsyncRenderLabel()
-        label.backgroundColor = UIColor.red
+//        label.backgroundColor = UIColor.red
 //        label.numberOfLines = 0
 //        label.lineBreakMode = .byWordWrapping
 //        label.font = UIFont.systemFont(ofSize: 13)
@@ -97,7 +97,7 @@ class HomeViewCell: UITableViewCell {
 //        contentView.layer.addSublayer(label)
 
         let label = AsyncRenderLabel()
-        label.backgroundColor = UIColor.red
+//        label.backgroundColor = UIColor.red
 //        label.textAlignment = .left
 //        label.numberOfLines = 0
 //        label.lineBreakMode = .byWordWrapping
