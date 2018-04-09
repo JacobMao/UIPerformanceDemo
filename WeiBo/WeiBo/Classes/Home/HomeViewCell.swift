@@ -69,7 +69,7 @@ class HomeViewCell: UITableViewCell {
         return label
     }()
 
-    private lazy var contentLabel1: UILabel = {
+    private lazy var contentLabel1: AsyncRenderLabel = {
 //        let label = CATextLayer()
 //
 //        label.contentsScale = UIScreen.main.scale
@@ -78,16 +78,17 @@ class HomeViewCell: UITableViewCell {
 //        label.backgroundColor = UIColor.red.cgColor
 //        contentView.layer.addSublayer(label)
 
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.font = UIFont.systemFont(ofSize: 13)
+        let label = AsyncRenderLabel()
+        label.backgroundColor = UIColor.red
+//        label.numberOfLines = 0
+//        label.lineBreakMode = .byWordWrapping
+//        label.font = UIFont.systemFont(ofSize: 13)
         contentView.addSubview(label)
 
         return label
     }()
 
-    private lazy var retweetContentLabel1: UILabel = {
+    private lazy var retweetContentLabel1: AsyncRenderLabel = {
 //        let label = CATextLayer()
 //
 //        label.contentsScale = UIScreen.main.scale
@@ -95,11 +96,12 @@ class HomeViewCell: UITableViewCell {
 //        label.isWrapped = true
 //        contentView.layer.addSublayer(label)
 
-        let label = UILabel()
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.font = UIFont.systemFont(ofSize: 13)
+        let label = AsyncRenderLabel()
+        label.backgroundColor = UIColor.red
+//        label.textAlignment = .left
+//        label.numberOfLines = 0
+//        label.lineBreakMode = .byWordWrapping
+//        label.font = UIFont.systemFont(ofSize: 13)
         contentView.addSubview(label)
 
 
@@ -171,12 +173,13 @@ class HomeViewCell: UITableViewCell {
                 
                 sourceLabel1.string = viewModel.sourceText
 
-                contentLabel1.attributedText = viewModel.statusContent.statusAttributedStr
+                contentLabel1.textRender = viewModel.render
+//                contentLabel1.attributedText = viewModel.statusContent.statusAttributedStr
 //                contentLabel1.linkRanges = viewModel.statusContent.linkRanges
 //                contentLabel1.userRanges = viewModel.statusContent.userRanges
 //                contentLabel1.topicRanges = viewModel.statusContent.topicRanges
 
-                retweetContentLabel1.attributedText = viewModel.retweetContent.statusAttributedStr
+                retweetContentLabel1.textRender = viewModel.retweetRender
 //                retweetContentLabel1.linkRanges = viewModel.retweetContent.linkRanges
 //                retweetContentLabel1.userRanges = viewModel.retweetContent.userRanges
 //                retweetContentLabel1.topicRanges = viewModel.retweetContent.topicRanges

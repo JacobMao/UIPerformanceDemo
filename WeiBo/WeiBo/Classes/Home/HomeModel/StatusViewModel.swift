@@ -76,6 +76,9 @@ class StatusViewModel: NSObject {
 
     let statusContent: StatusContent
     let retweetContent: StatusContent
+
+    let render: RenderObject?
+    let retweetRender: RenderObject?
     
     init( status : Status ){
         
@@ -159,7 +162,17 @@ class StatusViewModel: NSObject {
             retweetContent = StatusContent(status: nil)
         }
 
+        if let statusAttrStr = statusContent.statusAttributedStr {
+            render = RenderObject(attributedText: statusAttrStr)
+        } else {
+            render = nil
+        }
 
+        if let statusAttrStr = retweetContent.statusAttributedStr {
+            retweetRender = RenderObject(attributedText: statusAttrStr)
+        } else {
+            retweetRender = nil
+        }
     }
 
     func generateLayoutModel() -> HomeCellLayout {

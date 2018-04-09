@@ -76,6 +76,7 @@ struct HomeCellLayout {
         } else {
             contentRect = CGRect.zero
         }
+        viewModel.render?.setRenderSize(contentRect.size)
 
         if let drawingRect = viewModel.retweetContent.statusAttributedStr?.boundingRect(with: CGSize(width: kScreenW - 30, height: CGFloat(MAXFLOAT)),
                                                                                         options: [.usesLineFragmentOrigin, .usesFontLeading],
@@ -94,6 +95,7 @@ struct HomeCellLayout {
         } else {
             retweetContentRect = CGRect.zero
         }
+        viewModel.retweetRender?.setRenderSize(retweetContentRect.size)
 
         let (picContainerSize, imageViewSize) = HomeCellLayout.calculatePicViewAndItemSize(count: viewModel.picURLs.count)
         if picContainerSize != CGSize.zero {
