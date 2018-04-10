@@ -113,6 +113,7 @@ extension HomeViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "homeCell") as! HomeViewCell
 
+        cell.parentVC = self
         cell.setupLayout(cellLayoutModels[indexPath.row])
         cell.statusVM = self.statusViewModels[indexPath.row]
 

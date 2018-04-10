@@ -21,6 +21,10 @@ class RenderObject {
         return _layoutManager.glyphRange(for: _textContainer)
     }
 
+    var attributedText: NSAttributedString {
+        return _textStorage
+    }
+
     init(attributedText: NSAttributedString) {
         _textContainer = NSTextContainer()
         _textContainer.lineFragmentPadding = 0
@@ -51,5 +55,9 @@ class RenderObject {
                 return
             }
         }
+    }
+
+    func characterIndex(at location: CGPoint) -> Int {
+        return _layoutManager.characterIndex(for: location, in: _textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
     }
 }

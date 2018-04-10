@@ -5,6 +5,8 @@ private let edgeMargin : CGFloat = 15
 private let itemMargin : CGFloat = 10
 
 class HomeViewCell: UITableViewCell {
+    weak var parentVC: UIViewController?
+
     private lazy var iconImage1: CALayer = {
         let imageView = CALayer()
         imageView.cornerRadius = 20
@@ -83,6 +85,28 @@ class HomeViewCell: UITableViewCell {
 //        label.numberOfLines = 0
 //        label.lineBreakMode = .byWordWrapping
 //        label.font = UIFont.systemFont(ofSize: 13)
+
+        label.userTapHandler = { (label, user, range) in
+            let alert = UIAlertController(title: nil, message: "clicked user: \(user)", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.parentVC?.present(alert, animated: true, completion: nil)
+        }
+
+        label.linkTapHandler = { (label, link, range) in
+            let alert = UIAlertController(title: nil, message: "clicked link: \(link)", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.parentVC?.present(alert, animated: true, completion: nil)
+        }
+
+        label.topicTapHandler = { (label, topic, range) in
+            let alert = UIAlertController(title: nil, message: "clicked topic: \(topic)", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.parentVC?.present(alert, animated: true, completion: nil)
+        }
+
         contentView.addSubview(label)
 
         return label
@@ -102,6 +126,28 @@ class HomeViewCell: UITableViewCell {
 //        label.numberOfLines = 0
 //        label.lineBreakMode = .byWordWrapping
 //        label.font = UIFont.systemFont(ofSize: 13)
+
+        label.userTapHandler = { (label, user, range) in
+            let alert = UIAlertController(title: nil, message: "clicked user: \(user)", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.parentVC?.present(alert, animated: true, completion: nil)
+        }
+
+        label.linkTapHandler = { (label, link, range) in
+            let alert = UIAlertController(title: nil, message: "clicked link: \(link)", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.parentVC?.present(alert, animated: true, completion: nil)
+        }
+
+        label.topicTapHandler = { (label, topic, range) in
+            let alert = UIAlertController(title: nil, message: "clicked topic: \(topic)", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.parentVC?.present(alert, animated: true, completion: nil)
+        }
+
         contentView.addSubview(label)
 
 
@@ -175,62 +221,16 @@ class HomeViewCell: UITableViewCell {
 
                 contentLabel1.textRender = viewModel.render
 //                contentLabel1.attributedText = viewModel.statusContent.statusAttributedStr
-//                contentLabel1.linkRanges = viewModel.statusContent.linkRanges
-//                contentLabel1.userRanges = viewModel.statusContent.userRanges
-//                contentLabel1.topicRanges = viewModel.statusContent.topicRanges
+                contentLabel1.linkRanges = viewModel.statusContent.linkRanges
+                contentLabel1.userRanges = viewModel.statusContent.userRanges
+                contentLabel1.topicRanges = viewModel.statusContent.topicRanges
 
                 retweetContentLabel1.textRender = viewModel.retweetRender
-//                retweetContentLabel1.linkRanges = viewModel.retweetContent.linkRanges
-//                retweetContentLabel1.userRanges = viewModel.retweetContent.userRanges
-//                retweetContentLabel1.topicRanges = viewModel.retweetContent.topicRanges
+                retweetContentLabel1.linkRanges = viewModel.retweetContent.linkRanges
+                retweetContentLabel1.userRanges = viewModel.retweetContent.userRanges
+                retweetContentLabel1.topicRanges = viewModel.retweetContent.topicRanges
 
                 picView1.picUrls = (statusVM?.picURLs)!
-                
-                // MARK: - RELabel监听点击
-                
-                // 监听用户的点击
-//                contentLabel1.userTapHandler = { (label, user, range) in
-//                    print(label)
-//                    print(user)
-//                    print(range)
-//                }
-                
-                // 监听链接的点击
-//                contentLabel1.linkTapHandler = { (label, link, range) in
-//                    print(label)
-//                    print(link)
-//                    print(range)
-//                }
-                
-                // 监听话题的点击
-//                contentLabel1.topicTapHandler = { (label, topic, range) in
-//                    print(label)
-//                    print(topic)
-//                    print(range)
-//                }
-                
-                // 监听用户的点击
-//                retweetContentLabel1.userTapHandler = { (label, user, range) in
-//                    print(label)
-//                    print(user)
-//                    print(range)
-//                }
-                
-                // 监听链接的点击
-//                retweetContentLabel1.linkTapHandler = { (label, link, range) in
-//                    print(label)
-//                    print(link)
-//                    print(range)
-//                }
-                
-                // 监听话题的点击
-//                retweetContentLabel1.topicTapHandler = { (label, topic, range) in
-//                    print(label)
-//                    print(topic)
-//                    print(range)
-//                }
-
-                
             }
         }
     }
