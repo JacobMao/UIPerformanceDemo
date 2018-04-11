@@ -1,5 +1,10 @@
 import UIKit
 import SDWebImage
+import Kingfisher
+
+private let imageCache: NSCache<NSURL, UIImage> = {
+    return NSCache<NSURL, UIImage>()
+}()
 
 class PicCollectionView2: UICollectionView {
     var picUrls : [URL] = [URL](){
@@ -47,6 +52,12 @@ class PicCollectionViewCell2: UICollectionViewCell {
 
     override init(frame: CGRect) {
         iconImageLayer = CALayer()
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        iconImageLayer.contentsScale = UIScreen.main.scale
+        iconImageLayer.isOpaque = true
+        iconImageLayer.backgroundColor = UIColor.white.cgColor
+        CATransaction.commit()
 
         super.init(frame: frame)
 
@@ -61,6 +72,17 @@ class PicCollectionViewCell2: UICollectionViewCell {
         contentView.layer.addSublayer(iconImageLayer)
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        if iconImageLayer.frame != self.contentView.bounds {
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            iconImageLayer.frame = self.contentView.bounds
+            CATransaction.commit()
+        }
+    }
+
     var picUrl : URL? {
         didSet{
             guard let url = picUrl else {  return  }
@@ -72,13 +94,42 @@ class PicCollectionViewCell2: UICollectionViewCell {
             self.iconImageLayer.contents = nil
             CATransaction.commit()
 
+            if let image = imageCache.object(forKey: url as NSURL) {
+                CATransaction.begin()
+                CATransaction.setDisableActions(true)
+                self.iconImageLayer.contents = image.cgImage
+                CATransaction.commit()
+                return
+            }
+
             imageOperation = SDWebImageManager.shared().loadImage(with: url,
-                                                                  options: [],
-                                                                  progress: nil) { (image, _, _, _, _, _) in
-                                                                    CATransaction.begin()
-                                                                    CATransaction.setDisableActions(true)
-                                                                    self.iconImageLayer.contents = image?.cgImage
-                                                                    CATransaction.commit()
+                                                 options: [],
+                                                 progress: nil) { (image, _, _, _, finished, _) in
+                                                    if !finished {
+                                                        return
+                                                    }
+
+                                                    guard let i = image else {
+                                                        return
+                                                    }
+
+                                                    let resizeFactor = self.contentView.bounds.size
+                                                    let scaleFactor = self.iconImageLayer.contentsScale
+                                                    DispatchQueue.global().async {
+                                                        let resizedImage = i.kf.scaled(to: scaleFactor).kf.resize(to: resizeFactor)
+                                                        DispatchQueue.main.async {
+                                                            imageCache.setObject(resizedImage, forKey: url as NSURL)
+
+                                                            if url != self.picUrl {
+                                                                return
+                                                            }
+                                                            
+                                                            CATransaction.begin()
+                                                            CATransaction.setDisableActions(true)
+                                                            self.iconImageLayer.contents = resizedImage.cgImage
+                                                            CATransaction.commit()
+                                                        }
+                                                    }
             }
          }
     }

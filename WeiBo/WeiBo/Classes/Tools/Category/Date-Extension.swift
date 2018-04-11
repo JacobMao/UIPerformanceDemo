@@ -1,12 +1,15 @@
 import Foundation
 
+private let fmt: DateFormatter = {
+    let f = DateFormatter()
+    f.dateFormat = "EEE MM dd HH:mm:ss Z yyyy"
+    f.locale = Locale(identifier: "en")
+
+    return f
+}()
+
 extension Date{
     static func creatDateString(creatAtString : String) -> String {
-
-        let fmt = DateFormatter()
-        fmt.dateFormat = "EEE MM dd HH:mm:ss Z yyyy"
-        fmt.locale = Locale.current
-
         guard let creatDate = fmt.date(from: creatAtString) else{
             return ""
         }

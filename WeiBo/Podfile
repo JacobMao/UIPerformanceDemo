@@ -8,5 +8,6 @@ pod 'Alamofire', '~> 4.7'
 pod 'SVProgressHUD'
 pod 'SDWebImage'
 pod 'MJRefresh'
+pod 'Kingfisher', '~> 4.0'
 
 end

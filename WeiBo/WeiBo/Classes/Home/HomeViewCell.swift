@@ -4,13 +4,23 @@ import SDWebImage
 private let edgeMargin : CGFloat = 15
 private let itemMargin : CGFloat = 10
 
+private let iconCache: NSCache<NSURL, UIImage> = {
+    return NSCache<NSURL, UIImage>()
+}()
+
 class HomeViewCell: UITableViewCell {
     weak var parentVC: UIViewController?
 
-    private lazy var iconImage1: CALayer = {
-        let imageView = CALayer()
+    private lazy var iconImage1: BgLayer = {
+        let imageView = BgLayer()
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         imageView.cornerRadius = 20
         imageView.masksToBounds = true
+        imageView.backgroundColor = UIColor.white.cgColor
+        imageView.isOpaque = true
+        imageView.contentsScale = UIScreen.main.scale
+        CATransaction.commit()
 
         contentView.layer.addSublayer(imageView)
 
@@ -25,12 +35,17 @@ class HomeViewCell: UITableViewCell {
         return imageView
     }()
 
-    private lazy var userNameLabel1: CATextLayer = {
-        let label = CATextLayer()
+    private lazy var userNameLabel1: BgTextLayer = {
+        let label = BgTextLayer()
         let font = UIFont.systemFont(ofSize: 14)
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         label.font = font
         label.fontSize = font.pointSize
         label.contentsScale = UIScreen.main.scale
+        label.backgroundColor = UIColor.white.cgColor
+        label.isOpaque = true
+        CATransaction.commit()
 
         contentView.layer.addSublayer(label)
 
@@ -45,26 +60,37 @@ class HomeViewCell: UITableViewCell {
         return imageView
     }()
     
-    private lazy var creatAtLabel1: CATextLayer = {
-        let label = CATextLayer()
+    private lazy var creatAtLabel1: BgTextLayer = {
+        let label = BgTextLayer()
         let font = UIFont.systemFont(ofSize: 10)
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         label.font = font
         label.fontSize = font.pointSize
         label.contentsScale = UIScreen.main.scale
         label.foregroundColor = UIColor(red: 0.447, green: 0.447, blue: 0.447, alpha: 1).cgColor
+        label.backgroundColor = UIColor.white.cgColor
+        label.isOpaque = true
+        CATransaction.commit()
+
         
         contentView.layer.addSublayer(label)
         
         return label
     }()
     
-    private lazy var sourceLabel1: CATextLayer = {
-        let label = CATextLayer()
+    private lazy var sourceLabel1: BgTextLayer = {
+        let label = BgTextLayer()
         let font = UIFont.systemFont(ofSize: 10)
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         label.font = font
         label.fontSize = font.pointSize
         label.contentsScale = UIScreen.main.scale
         label.foregroundColor = UIColor(red: 0.447, green: 0.447, blue: 0.447, alpha: 1).cgColor
+        label.backgroundColor = UIColor.white.cgColor
+        label.isOpaque = true
+        CATransaction.commit()
         
         contentView.layer.addSublayer(label)
         
@@ -81,6 +107,13 @@ class HomeViewCell: UITableViewCell {
 //        contentView.layer.addSublayer(label)
 
         let label = AsyncRenderLabel()
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        label.isOpaque = true
+        label.backgroundColor = UIColor.white
+        label.layer.isOpaque = true
+        label.layer.backgroundColor = UIColor.white.cgColor
+        CATransaction.commit()
 //        label.backgroundColor = UIColor.red
 //        label.numberOfLines = 0
 //        label.lineBreakMode = .byWordWrapping
@@ -121,6 +154,19 @@ class HomeViewCell: UITableViewCell {
 //        contentView.layer.addSublayer(label)
 
         let label = AsyncRenderLabel()
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        label.isOpaque = true
+        label.backgroundColor = UIColor(red: 235.0 / 255.0,
+                                        green: 235.0 / 255.0,
+                                        blue: 241.0 / 255.0,
+                                        alpha: 1.0)
+        label.layer.isOpaque = true
+        label.layer.backgroundColor = UIColor(red: 235.0 / 255.0,
+                                              green: 235.0 / 255.0,
+                                              blue: 241.0 / 255.0,
+                                              alpha: 1.0).cgColor
+        CATransaction.commit()
 //        label.backgroundColor = UIColor.red
 //        label.textAlignment = .left
 //        label.numberOfLines = 0
@@ -171,10 +217,13 @@ class HomeViewCell: UITableViewCell {
     
     private lazy var retweetStatusBGView1: CALayer = {
         let bgView = CALayer()
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         bgView.backgroundColor = UIColor(red: 235.0 / 255.0,
                                          green: 235.0 / 255.0,
                                          blue: 241.0 / 255.0,
                                          alpha: 1.0).cgColor
+        CATransaction.commit()
         
         contentView.layer.addSublayer(bgView)
         
@@ -193,13 +242,44 @@ class HomeViewCell: UITableViewCell {
                 CATransaction.setDisableActions(true)
                 self.iconImage1.contents = nil
                 CATransaction.commit()
-                imageOperation = SDWebImageManager.shared().loadImage(with: statusVM?.profileURL,
-                                                                      options: [],
-                                                                      progress: nil) { (image, _, _, _, _, _) in
-                                                                        CATransaction.begin()
-                                                                        CATransaction.setDisableActions(true)
-                                                                        self.iconImage1.contents = image?.cgImage
-                                                                        CATransaction.commit()
+
+                if let profileURL = viewModel.profileURL {
+                    if let image = iconCache.object(forKey: profileURL as NSURL) {
+                        CATransaction.begin()
+                        CATransaction.setDisableActions(true)
+                        self.iconImage1.contents = image.cgImage
+                        CATransaction.commit()
+                    } else {
+                        imageOperation = SDWebImageManager.shared().loadImage(with: profileURL,
+                                                                              options: [],
+                                                                              progress: nil) { (image, _, _, _, finished, _) in
+                                                                                if !finished {
+                                                                                    return
+                                                                                }
+
+                                                                                guard let i = image else {
+                                                                                    return
+                                                                                }
+
+                                                                                let resizeFactor = self.iconImage1.bounds.size
+                                                                                let scaleFactor = self.iconImage1.contentsScale
+                                                                                DispatchQueue.global().async {
+                                                                                    let resizedImage = i.kf.scaled(to: scaleFactor).kf.resize(to: resizeFactor)
+                                                                                    DispatchQueue.main.async {
+                                                                                        iconCache.setObject(resizedImage, forKey: profileURL as NSURL)
+
+                                                                                        if profileURL != self.statusVM?.profileURL {
+                                                                                            return
+                                                                                        }
+
+                                                                                        CATransaction.begin()
+                                                                                        CATransaction.setDisableActions(true)
+                                                                                        self.iconImage1.contents = resizedImage.cgImage
+                                                                                        CATransaction.commit()
+                                                                                    }
+                                                                                }
+                        }
+                    }
                 }
 
                 CATransaction.begin()
@@ -213,11 +293,22 @@ class HomeViewCell: UITableViewCell {
                 CATransaction.commit()
                 
                 userNameLabel1.string = viewModel.status.user?.screen_name
-                userNameLabel1.foregroundColor  = (viewModel.vipImage == nil ? UIColor.black : UIColor.orange).cgColor
 
+                CATransaction.begin()
+                CATransaction.setDisableActions(true)
+                userNameLabel1.foregroundColor  = (viewModel.vipImage == nil ? UIColor.black : UIColor.orange).cgColor
+                CATransaction.commit()
+
+
+                CATransaction.begin()
+                CATransaction.setDisableActions(true)
                 creatAtLabel1.string = viewModel.creatTimeStr
-                
+                CATransaction.commit()
+
+                CATransaction.begin()
+                CATransaction.setDisableActions(true)
                 sourceLabel1.string = viewModel.sourceText
+                CATransaction.commit()
 
                 contentLabel1.textRender = viewModel.render
 //                contentLabel1.attributedText = viewModel.statusContent.statusAttributedStr

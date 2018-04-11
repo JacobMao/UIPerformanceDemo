@@ -10,6 +10,8 @@
 		5319C70B207B0D79001F0F18 /* RenderObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5319C70A207B0D79001F0F18 /* RenderObject.swift */; };
 		5319C70D207B1266001F0F18 /* AsyncRenderLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5319C70C207B1266001F0F18 /* AsyncRenderLayer.swift */; };
 		5319C723207B48EA001F0F18 /* AsyncRenderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5319C722207B48EA001F0F18 /* AsyncRenderLabel.swift */; };
+		531B1577207DA09000651048 /* BgTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B1576207DA09000651048 /* BgTextLayer.swift */; };
+		531B1579207DA80300651048 /* BgLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B1578207DA80300651048 /* BgLayer.swift */; };
 		533519B12068EF0C00A8F124 /* HomeCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533519B02068EF0C00A8F124 /* HomeCellLayout.swift */; };
 		538F5C662069DA10006CAE73 /* RELabel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538F5C652069DA10006CAE73 /* RELabel2.swift */; };
 		53D4B4A7206CDC7400F1768C /* PicCollectionView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D4B4A6206CDC7400F1768C /* PicCollectionView2.swift */; };
@@ -51,6 +53,8 @@
 		5319C70A207B0D79001F0F18 /* RenderObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderObject.swift; sourceTree = "<group>"; };
 		5319C70C207B1266001F0F18 /* AsyncRenderLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncRenderLayer.swift; sourceTree = "<group>"; };
 		5319C722207B48EA001F0F18 /* AsyncRenderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncRenderLabel.swift; sourceTree = "<group>"; };
+		531B1576207DA09000651048 /* BgTextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BgTextLayer.swift; sourceTree = "<group>"; };
+		531B1578207DA80300651048 /* BgLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BgLayer.swift; sourceTree = "<group>"; };
 		533519B02068EF0C00A8F124 /* HomeCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellLayout.swift; sourceTree = "<group>"; };
 		538F5C652069DA10006CAE73 /* RELabel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RELabel2.swift; sourceTree = "<group>"; };
 		53D4B4A6206CDC7400F1768C /* PicCollectionView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicCollectionView2.swift; sourceTree = "<group>"; };
@@ -140,6 +144,8 @@
 				53D4B4A6206CDC7400F1768C /* PicCollectionView2.swift */,
 				533519B02068EF0C00A8F124 /* HomeCellLayout.swift */,
 				5319C722207B48EA001F0F18 /* AsyncRenderLabel.swift */,
+				531B1576207DA09000651048 /* BgTextLayer.swift */,
+				531B1578207DA80300651048 /* BgLayer.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -403,6 +409,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WeiBo/Pods-WeiBo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
@@ -410,6 +417,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
@@ -437,6 +445,7 @@
 				B4BC06431ED528330030E68E /* OAuthViewController.swift in Sources */,
 				533519B12068EF0C00A8F124 /* HomeCellLayout.swift in Sources */,
 				5319C70B207B0D79001F0F18 /* RenderObject.swift in Sources */,
+				531B1579207DA80300651048 /* BgLayer.swift in Sources */,
 				B4BC063F1ED5236A0030E68E /* NetworkTools.swift in Sources */,
 				B4C9787F1ECE8711001D640E /* MainViewController.swift in Sources */,
 				B4834DD21EEE3F2B00DD7D7F /* EmotionPackage.swift in Sources */,
@@ -451,6 +460,7 @@
 				B4F0F7111ED93040009298EA /* StatusViewModel.swift in Sources */,
 				B44DDDB51ECF2F64002AF0AD /* VisitorView.swift in Sources */,
 				538F5C662069DA10006CAE73 /* RELabel2.swift in Sources */,
+				531B1577207DA09000651048 /* BgTextLayer.swift in Sources */,
 				B4C978811ECE8AEB001D640E /* HomeViewController.swift in Sources */,
 				B4834DD31EEE3F2B00DD7D7F /* UITextView+Extension.swift in Sources */,
 				B41D0C701EE5093700F2282A /* PicCollectionView.swift in Sources */,
