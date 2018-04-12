@@ -4,10 +4,10 @@ class BaseViewController: UITableViewController {
     var visitorView : VisitorView = VisitorView.visitorView()
     var isLogin : Bool = false
 
-    override func loadView() {
-        isLogin = UserAccountViewModel.shared.isLogin
-        isLogin ? super.loadView() : setupVisitorView()
-    }
+//    override func loadView() {
+//        isLogin = UserAccountViewModel.shared.isLogin
+//        isLogin ? super.loadView() : setupVisitorView()
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

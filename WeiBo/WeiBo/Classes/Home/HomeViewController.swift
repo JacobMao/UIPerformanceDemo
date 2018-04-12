@@ -11,14 +11,15 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if !isLogin {
-            return
-        }
-        
+//        if !isLogin {
+//            return
+//        }
+
         title = "Home"
-        addRefreshComponent()
-        
+//        addRefreshComponent()
+
         tableView.register(HomeViewCell.self, forCellReuseIdentifier: "homeCell")
+        self.loadData(true)
     }
     
     deinit {
@@ -96,8 +97,6 @@ extension HomeViewController{
                     }
 
                     self.tableView.reloadData()
-                    self.tableView.mj_header.endRefreshing()
-                    self.tableView.mj_footer.endRefreshing()
                 }
             }
         }

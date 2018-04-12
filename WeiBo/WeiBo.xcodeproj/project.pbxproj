@@ -13,6 +13,7 @@
 		531B1577207DA09000651048 /* BgTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B1576207DA09000651048 /* BgTextLayer.swift */; };
 		531B1579207DA80300651048 /* BgLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B1578207DA80300651048 /* BgLayer.swift */; };
 		533519B12068EF0C00A8F124 /* HomeCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533519B02068EF0C00A8F124 /* HomeCellLayout.swift */; };
+		538B678F207EEFF0006C9A48 /* json.txt in Resources */ = {isa = PBXBuildFile; fileRef = 538B678E207EEFF0006C9A48 /* json.txt */; };
 		538F5C662069DA10006CAE73 /* RELabel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538F5C652069DA10006CAE73 /* RELabel2.swift */; };
 		53D4B4A7206CDC7400F1768C /* PicCollectionView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D4B4A6206CDC7400F1768C /* PicCollectionView2.swift */; };
 		5BB4D16FB57EB5EE75ECE37E /* Pods_WeiBo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88448C91CFE995C2705B9064 /* Pods_WeiBo.framework */; };
@@ -56,6 +57,7 @@
 		531B1576207DA09000651048 /* BgTextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BgTextLayer.swift; sourceTree = "<group>"; };
 		531B1578207DA80300651048 /* BgLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BgLayer.swift; sourceTree = "<group>"; };
 		533519B02068EF0C00A8F124 /* HomeCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellLayout.swift; sourceTree = "<group>"; };
+		538B678E207EEFF0006C9A48 /* json.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json.txt; sourceTree = "<group>"; };
 		538F5C652069DA10006CAE73 /* RELabel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RELabel2.swift; sourceTree = "<group>"; };
 		53D4B4A6206CDC7400F1768C /* PicCollectionView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicCollectionView2.swift; sourceTree = "<group>"; };
 		88448C91CFE995C2705B9064 /* Pods_WeiBo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeiBo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,6 +193,7 @@
 		B45664B81ECDF70C00BAD01F /* WeiBo */ = {
 			isa = PBXGroup;
 			children = (
+				538B678E207EEFF0006C9A48 /* json.txt */,
 				B40170691ECE045400185F20 /* Classes */,
 				B45664B91ECDF70C00BAD01F /* AppDelegate.swift */,
 				B45664BD1ECDF70C00BAD01F /* Main.storyboard */,
@@ -355,6 +358,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				538B678F207EEFF0006C9A48 /* json.txt in Resources */,
 				B45664C41ECDF70C00BAD01F /* LaunchScreen.storyboard in Resources */,
 				B44DDDB71ECF2F70002AF0AD /* VisitorView.xib in Resources */,
 				B4C9788D1ECEC4CF001D640E /* Home.storyboard in Resources */,
@@ -620,7 +624,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "$(inherited) \"-D\" \"COCOAPODS\"";
-				PRODUCT_BUNDLE_IDENTIFIER = jacob.weiboPerformance.test;
+				PRODUCT_BUNDLE_IDENTIFIER = jacob.weiboPerformance.test100;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -641,7 +645,7 @@
 				INFOPLIST_FILE = WeiBo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jacob.weiboPerformance.test;
+				PRODUCT_BUNDLE_IDENTIFIER = jacob.weiboPerformance.test100;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;

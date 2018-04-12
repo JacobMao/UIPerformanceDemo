@@ -55,20 +55,9 @@ extension NetworkTools {
 
 extension NetworkTools{
     class func loadHomeData(_ since_id : Int , max_id : Int , finishCallBack:@escaping (_ result : [[String : AnyObject]]? ) -> ()) {
-        print(homgDataUrl + "?access_token" + UserAccountViewModel.shared.account!.access_token!)
-        let accessToken = UserAccountViewModel.shared.account!.access_token!
-        requestData(type: .GET,
-                    URLString: homgDataUrl,
-                    parameters: ["access_token" : accessToken , "since_id" : "\(since_id)" , "max_id" : "\(max_id)"]) { (result) in
-            guard result is [String : AnyObject] else{
-                return
-            }
-
-            guard let statusesArray = result["statuses"] as? [[String : AnyObject]] else {
-                return
-            }
-
-            finishCallBack(statusesArray)
-        }
+        let jsonFilePath = Bundle.main.url(forResource: "json", withExtension: "txt")!
+        let jsonData = try! Data(contentsOf: jsonFilePath)
+        let statusesArray = (try! JSONSerialization.jsonObject(with: jsonData, options: [.allowFragments])) as! [[String : AnyObject]]
+        finishCallBack(statusesArray)
     }
 }
